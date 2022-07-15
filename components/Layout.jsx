@@ -1,19 +1,13 @@
-// React & Next stuff
 import * as React from "react";
-import type { AppProps } from "next/app";
 import Head from "next/head";
 
-import { CssBaseline, ThemeProvider, useMediaQuery, createTheme } from "@mui/material";
+import Navbar from "./Navbar";
+// import Footer from "./Footer";
 
-// MUI Typography CSS
-import "@fontsource/roboto/300.css";
-import "@fontsource/roboto/400.css";
-import "@fontsource/roboto/500.css";
-import "@fontsource/roboto/700.css";
+import { CssBaseline, createTheme, ThemeProvider, useMediaQuery } from "@mui/material";
 
-
-function CSHelp({ Component, pageProps }: AppProps) {
-
+export default function Layout({ children }) {
+	
 	const prefersDarkMode = useMediaQuery("(prefers-color-scheme: dark");
 
 	const theme = React.useMemo(
@@ -23,21 +17,24 @@ function CSHelp({ Component, pageProps }: AppProps) {
 			},
 		}),
 		[prefersDarkMode]
-	)
+	);
 
-	return(
+	return (
 		<ThemeProvider theme={theme}>
 			<Head>
-				{/* Ensure proper  MUI rendering */}
+				{/* Ensure proper MUI rendering */}
 				<meta name="viewport" content="initial-scale=1, width=device-width" />
 			</Head>
 
 			{/* Ensure consistent (baseline) CSS across browsers */}
 			<CssBaseline enableColorScheme />
 
-			<Component {...pageProps} />
+
+			<React.Fragment>
+				<Navbar />
+				{ children }
+				{/* <Footer /> 4*/}
+			</React.Fragment>
 		</ThemeProvider>
 	)
 }
-
-export default CSHelp;
